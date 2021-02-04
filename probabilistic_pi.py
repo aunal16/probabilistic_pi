@@ -12,7 +12,7 @@ pairs = list()
 def generate_points(num_of_points):
     n = num_of_points
     
-    for _ in range(2*N):
+    for _ in range(N):
         x = random()
         y = random()
 
