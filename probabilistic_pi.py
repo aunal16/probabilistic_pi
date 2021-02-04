@@ -11,7 +11,6 @@ seed(13)
 N = 10
 radius = 0.5
 origin = [0.5, 0.5]
-pairs, distances = list(), list()
 marker_size = 1
 
 # DEFINE FUNCTIONS
@@ -32,25 +31,36 @@ def calc_distances():
 
 # MAIN PROGRAM
 if __name__ == "__main__":
+    for i in range(1, 6):
+        n = N ** i - 1
 
-    fig, ax = plt.subplots(figsize=(4,4))
-    generate_points(N)
-    plot_circle()
-    plt.scatter(*zip(*pairs), s = marker_size, color = "g")
+        # Create empty lists to hold (x,y) pairs and their distances to the origin
+        pairs, distances = list(), list()
+        # Create new figure for each n
+        fig, ax = plt.subplots(num = i, figsize=(4,4)) 
+        
+        # Generate (x,y) pairs and calculate distances
+        generate_points(n)
+        calc_distances()
+       
+        # Plot circle and points
+        plot_circle()
+        plt.scatter(*zip(*pairs), s = marker_size, color = "g")
 
-    calc_distances()
+        # Calculate the ratio of the areas
+        outside = sum(map(lambda x : x > radius, distances))
+        inside = n - outside
+        ratio = inside / n
+        pi = ratio * 4.0
 
-    outside = sum(map(lambda x : x > radius, distances))
-    inside = N - outside
-
-    print("Inside:", inside, "Outside:", outside)
-    ratio = inside / N
-    pi = ratio * 4.0
-    pi_str = '{0:.15g}'.format(pi)
-    print("Monte Carlo Integration Result: \u03c0 =", pi_str)
-    print("Exact value of \u03c0 =", math.pi)
-    print("Error:", (pi - math.pi)/math.pi*100,"%")
-    
-    plt.xlabel("x");    plt.ylabel("y");
-    plt.xlim((0,1));    plt.ylim((0,1));
-    plt.show()
+        print("\nN=",n,"\n------------------------------------------------------")
+        print("Inside:", inside, "Outside:", outside) 
+        print("Monte Carlo Integration Result: \u03c0 =", '{0:.15g}'.format(pi))
+        print("Exact value of \u03c0 =", math.pi)
+        print("Error:", abs(pi - math.pi)/math.pi*100,"%")
+        print("\nClose this plot to move onto the next N value")
+        
+        # Plotting
+        plt.xlabel("x");    plt.ylabel("y");    plt.title("N = " + str(n))
+        plt.xlim((0,1));    plt.ylim((0,1));
+        plt.show()
