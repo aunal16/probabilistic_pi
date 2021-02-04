@@ -21,7 +21,7 @@ def generate_points(num_of_points):
         pairs.append((x,y))
 
 def plot_circle():
-    circle = plt.Circle((origin[0],origin[1]), radius, color = 'r', fill = False)
+    circle = plt.Circle((origin[0],origin[1]), radius, color = 'g', fill = False)
     ax.add_patch(circle)
 
 def calc_distances():
@@ -45,7 +45,7 @@ if __name__ == "__main__":
        
         # Plot circle and points
         plot_circle()
-        plt.scatter(*zip(*pairs), s = marker_size, color = "g")
+        plt.scatter(*zip(*pairs), s = marker_size, color = "orange")
 
         # Calculate the ratio of the areas
         outside = sum(map(lambda x : x > radius, distances))
@@ -58,9 +58,10 @@ if __name__ == "__main__":
         print("Monte Carlo Integration Result: \u03c0 =", '{0:.15g}'.format(pi))
         print("Exact value of \u03c0 =", math.pi)
         print("Error:", abs(pi - math.pi)/math.pi*100,"%")
-        print("\nClose this plot to move onto the next N value")
+        print("\n***Close this plot to move onto the next N value")
         
         # Plotting
         plt.xlabel("x");    plt.ylabel("y");    plt.title("N = " + str(n))
         plt.xlim((0,1));    plt.ylim((0,1));
+        plt.text(0.025, 0.94, "Error: " + str(abs(pi - math.pi)/math.pi*100) + "%", bbox=dict(facecolor='red', alpha=0.5))
         plt.show()
