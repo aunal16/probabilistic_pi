@@ -8,7 +8,7 @@ import math
 seed(13)
 
 # SET GLOBAL VARIABLES
-N = 10**5
+N = 10
 radius = 0.5
 origin = [0.5, 0.5]
 pairs, distances = list(), list()
@@ -22,20 +22,21 @@ def generate_points(num_of_points):
         pairs.append((x,y))
 
 def plot_circle():
-    circle = plt.Circle((0.5,0.5), radius, color = 'g', fill = False)
+    circle = plt.Circle((origin[0],origin[1]), radius, color = 'r', fill = False)
     ax.add_patch(circle)
 
 def calc_distances():
     for i in range(len(pairs)):
-        dist = math.sqrt((0.5 - pairs[i][0])**2 + (0.5 - pairs[i][1])**2)
+        dist = math.sqrt((origin[0] - pairs[i][0])**2 + (origin[1] - pairs[i][1])**2)
         distances.append(dist)
 
+# MAIN PROGRAM
 if __name__ == "__main__":
 
     fig, ax = plt.subplots(figsize=(4,4))
     generate_points(N)
     plot_circle()
-    plt.scatter(*zip(*pairs), s = marker_size)
+    plt.scatter(*zip(*pairs), s = marker_size, color = "g")
 
     calc_distances()
 
@@ -44,8 +45,8 @@ if __name__ == "__main__":
 
     print("Inside:", inside, "Outside:", outside)
     ratio = inside / N
-    pi = ratio * 4
-    pi_str = '{0:.15g}'.format(ratio*4)
+    pi = ratio * 4.0
+    pi_str = '{0:.15g}'.format(pi)
     print("Monte Carlo Integration Result: \u03c0 =", pi_str)
     print("Exact value of \u03c0 =", math.pi)
     print("Error:", (pi - math.pi)/math.pi*100,"%")
