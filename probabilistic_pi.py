@@ -32,7 +32,7 @@ def calc_distances():
 # MAIN PROGRAM
 if __name__ == "__main__":
     for i in range(1, 6):
-        n = N ** i - 1
+        n = N ** i
 
         # Create empty lists to hold (x,y) pairs and their distances to the origin
         pairs, distances = list(), list()
@@ -52,16 +52,17 @@ if __name__ == "__main__":
         inside = n - outside
         ratio = inside / n
         pi = ratio * 4.0
+        err = abs(pi - math.pi)/math.pi*100
 
         print("\nN=",n,"\n------------------------------------------------------")
         print("Inside:", inside, "Outside:", outside) 
         print("Monte Carlo Integration Result: \u03c0 =", '{0:.15g}'.format(pi))
         print("Exact value of \u03c0 =", math.pi)
-        print("Error:", abs(pi - math.pi)/math.pi*100,"%")
+        print("Error:", err,"%")
         print("\n***Close this plot to move onto the next N value")
         
         # Plotting
         plt.xlabel("x");    plt.ylabel("y");    plt.title("N = " + str(n))
         plt.xlim((0,1));    plt.ylim((0,1));
-        plt.text(0.025, 0.94, "Error: " + str(abs(pi - math.pi)/math.pi*100) + "%", bbox=dict(facecolor='red', alpha=0.5))
+        plt.text(0.025, 0.94, "Error:"+str(err)+"%", bbox=dict(facecolor='r', alpha=0.5))
         plt.show()
